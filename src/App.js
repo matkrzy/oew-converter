@@ -42,7 +42,12 @@ class App extends Component {
             input,
             fileName,
           },
-          () => this.convert(this.state.input),
+          () => {
+            this.convert(this.state.input);
+            if (this.state.autoDownload) {
+              this.button.click();
+            }
+          },
         );
       };
     })(file);
@@ -81,11 +86,7 @@ class App extends Component {
 
   handleSave = () => {
     const file = new Blob([this.state.output], { type: 'text/plain' });
-    this.setState({ link: URL.createObjectURL(file) }, () => {
-      if (this.state.autoDownload) {
-        this.button.click();
-      }
-    });
+    this.setState({ link: URL.createObjectURL(file) });
   };
 
   render() {
